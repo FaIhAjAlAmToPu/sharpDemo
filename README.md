@@ -67,7 +67,7 @@ Write all your code in a single `.cs` file using a `Main` method for testing. Im
 
 # Programming Scenarios with OOP Guidance
 
-This README provides five real-world-inspired programming scenarios to practice object-oriented programming (OOP) concepts. Each scenario includes a description and guidance to help you decide when to use abstract classes, interfaces, abstract methods, and polymorphism. Your task is to design and implement a program for each scenario, deducing the appropriate OOP constructs based on the requirements and hints provided.
+This section provides five real-world-inspired programming scenarios to practice object-oriented programming (OOP) concepts. Each scenario includes a description and guidance to help you decide when to use abstract classes, interfaces, abstract methods, and polymorphism. Your task is to design and implement a program for each scenario, deducing the appropriate OOP constructs based on the requirements and hints provided.
 
 ---
 
