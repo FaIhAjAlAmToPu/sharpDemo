@@ -43,6 +43,17 @@
 #### Do same for **Microsoft.EntityFrameworkCore.Tools**
 ![alt text](image-16.png)
 
+
+#### Install Required Packages (No GUI)
+![alt text](image-18.png)
+
+Run these in the **.NET CLI** or **Package Manager Console**:
+
+```bash
+Install-Package Microsoft.EntityFrameworkCore.Tools
+Install-Package Npgsql.EntityFrameworkCore.PostgreSQL
+```
+
 #### Create ***Data/ApplicationDbContext.cs*** (Then inherit from DbContext)
 ![alt text](image-14.png)
 
