@@ -145,7 +145,7 @@ Create a simple MVC application for a **Library Management System**:
 
 
 ## Ride-Sharing Trip Booking
-Explain how data is transacted through the MVC layers when a user books a ride by clicking a “Book Now” button, from the action to saving the trip in the database.
+**Question**: Explain how data is transacted through the MVC layers when a user books a ride by clicking a “Book Now” button, from the action to saving the trip in the database.
 
 **Roles**:
 - **Model**: Stores trip details (e.g., pickup location, driver), validates driver availability and distance, saves trip records to the database.
@@ -162,7 +162,7 @@ Explain how data is transacted through the MVC layers when a user books a ride b
 ---
 
 ## Automated Stock Price Update
-Describe how data flows through the MVC layers when an automated system updates stock prices via a scheduled API call, saving them to the database.
+**Question**: Describe how data flows through the MVC layers when an automated system updates stock prices via a scheduled API call, saving them to the database.
 
 **Roles**:
 - **Model**: Stores stock data (e.g., ticker, price), validates API-fetched prices, saves updates to the database.
@@ -179,7 +179,7 @@ Describe how data flows through the MVC layers when an automated system updates 
 ---
 
 ## Online Auction Bid Placement
-Explain the data transaction process through the MVC layers when a user places a bid by clicking a “Place Bid” button, with the bid saved in the database.
+**Question**: Explain the data transaction process through the MVC layers when a user places a bid by clicking a “Place Bid” button, with the bid saved in the database.
 
 **Roles**:
 - **Model**: Stores auction and bid data, validates bid amount against current highest bid, saves bid records to the database.
@@ -196,7 +196,7 @@ Explain the data transaction process through the MVC layers when a user places a
 ---
 
 ## URL-Based Blog Comment System
-Describe how data flows through the MVC layers when a user submits a comment via a URL navigation (e.g., /Posts/Comment/456), saving the comment in the database.
+**Question**: Describe how data flows through the MVC layers when a user submits a comment via a URL navigation (e.g., /Posts/Comment/456), saving the comment in the database.
 
 **Roles**:
 - **Model**: Stores blog post and comment data, validates comment content (e.g., no profanity), saves comments to the database.
@@ -213,7 +213,7 @@ Describe how data flows through the MVC layers when a user submits a comment via
 ---
 
 ## Smart Home Device Control
-Explain how data is transacted through the MVC layers when a smart home device sends a control command (e.g., turn on light) via an API call, with the command saved in the database.
+**Question**: Explain how data is transacted through the MVC layers when a smart home device sends a control command (e.g., turn on light) via an API call, with the command saved in the database.
 
 **Roles**:
 - **Model**: Stores device and command data (e.g., light status), validates command feasibility, saves command records to the database.
@@ -230,7 +230,7 @@ Explain how data is transacted through the MVC layers when a smart home device s
 ---
 
 ## Restaurant Table Reservation System
-Describe how data flows through the MVC layers when a customer reserves a table at a restaurant via a web form, from submission to saving the reservation in the database.
+**Question**: Describe how data flows through the MVC layers when a customer reserves a table at a restaurant via a web form, from submission to saving the reservation in the database.
 
 **Roles**:
 - **Model**: Manages restaurant and reservation data, checks table availability, saves records.
