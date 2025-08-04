@@ -78,12 +78,56 @@ A simple form to add a book:
 </form>
 ```
 
+
+#### Explanation of HTML:
+
+---
+
+##### `@model Book`
+
+This page works with a `Book` object.
+
+---
+
+##### `<form asp-action="Create" method="post">`
+
+When submitted, send the form to the `Create` method in the controller (POST request).
+
+---
+
+##### `<input asp-for="Title" />`
+
+Textbox for `Book.Title`
+
+---
+
+##### `<input asp-for="Author" />`
+
+Textbox for `Book.Author`
+
+---
+
+##### `<input asp-for="Price" type="number" />`
+
+Number input for `Book.Price`
+
+---
+
+##### `<button type="submit">Add Book</button>`
+
+Submits the form.
+
+---
+
+📦 When submitted, ASP.NET fills a `Book` object with the typed values.
+
+
 #### Controller (BooksController.cs)
 Handles showing the form and saving the book:
 ```csharp
 public class BooksController : Controller
 {
-    // Show the form
+    // Show the form via GET
     public IActionResult Create()
     {
         return View();
@@ -105,6 +149,52 @@ public class BooksController : Controller
 ```
 
 
+Very simply:
+
+---
+
+##### `[HttpPost]`
+
+This method runs **when the form is submitted** (POST request).
+
+---
+
+##### `public IActionResult Create(Book book)`
+
+Takes the form data and puts it into a `Book` object.
+
+---
+
+##### `if (ModelState.IsValid)`
+
+Checks if all form inputs are valid (not empty, correct type, etc.).
+
+---
+
+##### `// Save book to database`
+
+Here you would save the book to your database (e.g., using Entity Framework).
+
+---
+
+##### `return RedirectToAction("Index");`
+
+After saving, go back to the book list page (or main page).
+
+---
+
+##### `return View(book);`
+
+If the form had errors, show the form again **with previous inputs**.
+
+---
+
+📦 So:
+
+* ✅ Valid → save and go to another page
+* ❌ Invalid → show form again with previous inputs
+
+
 #### Model (Book.cs)
 Defines the book with simple rules:
 ```csharp
@@ -118,6 +208,7 @@ public class Book
 ```
 
 #### Updated Controller (BooksController.cs)
+> Let's save the book
 ```csharp
 public class BooksController : Controller
 {
@@ -158,4 +249,3 @@ public class BooksController : Controller
 3. **POST Action**: The `Create` action with `[HttpPost]` processes the form. If the data is valid, it saves the book and redirects to `Index`. If not, it shows the form again.
 4. **Model**: The `Book` class holds the book’s data (title, author, price).
 
-This is a simple example for beginners to understand form submission in ASP.NET Core MVC.

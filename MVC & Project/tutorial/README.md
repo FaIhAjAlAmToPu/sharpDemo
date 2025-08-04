@@ -153,11 +153,71 @@ Create a simple MVC application for a **Library Management System**:
 - **View**: Displays ride booking interface with map and driver options, shows booking status.
 
 **Data Flow**:
-1. Controller queries Model for available drivers; View renders booking page (e.g., “Pickup: [Downtown], Drivers: [Driver A, Driver B]”).
-2. View captures “Book Now” click (e.g., `{ UserId: "U501", Pickup: "Downtown", DriverId: 7 }`) and sends to Controller via POST.
-3. Controller validates booking data, passes to Model.
-4. Model checks driver availability, saves trip (e.g., `{ UserId: "U501", DriverId: 7, Pickup: "Downtown", Date: "2025-07-30" }`).
-5. Controller sends success (“Ride booked!”) or error (“No drivers available”) to View for display.
+1. **End User (clicks a button in View)**: The user sees a "Book Now" button on the ride booking page, clicks it, and submits their ride details like pickup location and driver preference.
+
+2. **End User → Controller**: The click sends the ride details (e.g., User ID, pickup location, driver ID) from the webpage to the RideController's Book method.
+
+3. **Controller**: The Controller receives the details, checks that all required information (e.g., User ID, pickup location, driver ID) is present.
+
+4. **Controller → Model**: The Controller passes the ride details to the Model.
+
+5. **Model**: The Model checks that the ride details are complete (e.g., User ID is there, pickup location isn’t blank).
+
+6. **Model → Database**: The Model sends a query to the Database to check if the driver is available.
+
+7. **Database**: The Database looks up the driver’s status through query.
+
+8. **Database → Model**: The Database sends back whether the driver is available or busy.
+
+9. **Model**: The Model receives the driver’s status, confirms if the driver is free, and sends commands to save the trip.
+
+10. **Model → Database**: The Model sends queries to the Database to save the trip and mark the driver as busy.
+
+11. **Database**: The Database saves the trip and updates the driver’s status to busy.
+
+12. **Model**: The Model receives the result from the Database, noting if the trip was saved with a booking ID or if it failed (e.g., "Driver not available").
+
+13. **Model → Controller**: The Model sends this result back to the Controller.
+
+14. **Controller**: The Controller looks at the result, decides if it should show a "success" or "error" message.
+
+15. **Controller → View**: The Controller passes the result (success or error message) to the View.
+
+16. **View**: The View turns the result into a message, like "Ride booked!" or "Driver not available," and displays it.
+
+17. **View → End User**: The View shows the message on the page for the user to see.
+---
+I apologize for the inconsistencies. You're right—some steps included actions like "sends a request" within a component instead of using a transition, and some transitions between Database and Model were missing. I'll correct this by ensuring all interactions are handled via transitions and include the proper flow. Here's the revised set of responses:
+
+---
+
+## Ride-Sharing Trip Booking
+**Question**: Explain how data is transacted through the MVC layers when a user books a ride by clicking a “Book Now” button, from the action to saving the trip in the database.
+
+**Roles**:
+- **Model**: Stores trip details (e.g., pickup location, driver), validates driver availability and distance, saves trip records to the database.
+- **Controller**: Handles “Book Now” button requests, retrieves trip data from Model, sends booking confirmation to View.
+- **View**: Displays ride booking interface with map and driver options, shows booking status.
+
+**Data Flow**:
+1. **Inside End User (clicks a button in View)**: The user sees a "Book Now" button on the ride booking page, clicks it, and submits their ride details like pickup location and driver preference.
+2. **End User → Controller**: The click sends the ride details (e.g., User ID, pickup location, driver ID) from the webpage to the RideController's Book method.
+3. **Controller**: The Controller receives the details, checks that all required information (e.g., User ID, pickup location, driver ID) is present.
+4. **Controller → Model**: The Controller passes the ride details to the Model.
+5. **Model**: The Model checks that the ride details are complete (e.g., User ID is there, pickup location isn’t blank).
+6. **Model → Database**: The Model sends a query to the Database.
+7. **Database**: The Database looks up the driver’s status.
+8. **Database → Model**: The Database sends back whether the driver is available or busy.
+9. **Model**: The Model confirms if the driver is free.
+10. **Model → Database**: The Model sends queries to the Database.
+11. **Database**: The Database saves the trip and updates the driver’s status to busy.
+12. **Database → Model**: The Database sends back the result.
+13. **Model**: The Model notes if the trip was saved with a booking ID or if it failed (e.g., "Driver not available").
+14. **Model → Controller**: The Model sends this result back to the Controller.
+15. **Controller**: The Controller decides if it should show a "success" or "error" message.
+16. **Controller → View**: The Controller passes the result (success or error message) to the View.
+17. **View**: The View turns the result into a message, like "Ride booked!" or "Driver not available," and displays it.
+18. **View → End User**: The View shows the message on the page for the user to see.
 
 ---
 
@@ -165,16 +225,29 @@ Create a simple MVC application for a **Library Management System**:
 **Question**: Describe how data flows through the MVC layers when an automated system updates stock prices via a scheduled API call, saving them to the database.
 
 **Roles**:
-- **Model**: Stores stock data (e.g., ticker, price), validates API-fetched prices, saves updates to the database.
-- **Controller**: Initiates scheduled stock price API calls, retrieves data from Model, updates View with latest prices.
-- **View**: Displays stock price dashboard with real-time updates.
+- **Model**: Stores stock price data, validates the received prices, and saves them to the database.
+- **Controller**: Handles the scheduled API call, retrieves stock price data from the Model, and sends the update status to the View.
+- **View**: Displays the stock price update interface, showing the latest prices or update status.
 
 **Data Flow**:
-1. Controller triggers scheduled API call, requests stock data from Model (e.g., “Ticker: AAPL”).
-2. Model fetches price from external API (e.g., `{ Ticker: "AAPL", Price: 150.25 }`).
-3. Controller validates API response, passes to Model.
-4. Model saves price update (e.g., `{ Ticker: "AAPL", Price: 150.25, Updated: "2025-07-30 11:09" }`).
-5. Controller sends updated prices to View, which displays (e.g., “AAPL: $150.25”) or error (“API error”).
+1. **Inside End User (clicks a button in View)**: The automated system triggers a scheduled API call to update stock prices, initiating the process.
+2. **End User → Controller**: The API call sends the stock price data (e.g., stock symbol, price, timestamp) to the StockController's Update method.
+3. **Controller**: The Controller receives the data, checks that all required information (e.g., stock symbol, price) is present.
+4. **Controller → Model**: The Controller passes the stock price data to the Model.
+5. **Model**: The Model checks that the stock price data is complete (e.g., symbol and price are valid).
+6. **Model → Database**: The Model sends a query to the Database.
+7. **Database**: The Database checks the existing records.
+8. **Database → Model**: The Database sends back confirmation that it’s ready to accept the data.
+9. **Model**: The Model validates the stock prices.
+10. **Model → Database**: The Model sends queries to the Database.
+11. **Database**: The Database saves the stock prices and updates the records.
+12. **Database → Model**: The Database sends back the result.
+13. **Model**: The Model notes if the prices were saved with a confirmation or if it failed (e.g., "Data invalid").
+14. **Model → Controller**: The Model sends this result back to the Controller.
+15. **Controller**: The Controller decides if it should show a "success" or "error" message.
+16. **Controller → View**: The Controller passes the result (success or error message) to the View.
+17. **View**: The View turns the result into a message, like "Stock prices updated!" or "Update failed," and displays it.
+18. **View → End User**: The View shows the message on the interface for the automated system to log or display.
 
 ---
 
@@ -182,16 +255,29 @@ Create a simple MVC application for a **Library Management System**:
 **Question**: Explain the data transaction process through the MVC layers when a user places a bid by clicking a “Place Bid” button, with the bid saved in the database.
 
 **Roles**:
-- **Model**: Stores auction and bid data, validates bid amount against current highest bid, saves bid records to the database.
-- **Controller**: Handles “Place Bid” button requests, retrieves auction data from Model, updates View with bid status.
-- **View**: Displays auction details and bidding interface, shows bid confirmation or errors.
+- **Model**: Stores bid details (e.g., user ID, amount), validates bid eligibility, and saves bid records to the database.
+- **Controller**: Handles “Place Bid” button requests, retrieves bid data from the Model, and sends bid status to the View.
+- **View**: Displays the auction interface with bidding options, shows bid placement status.
 
 **Data Flow**:
-1. Controller fetches auction details from Model; View shows auction page (e.g., “Item: Vintage Car, Current Bid: $500”).
-2. View captures “Place Bid” click (e.g., `{ UserId: "U602", AuctionId: 8, BidAmount: 550 }`) and sends to Controller via POST.
-3. Controller validates bid, passes to Model.
-4. Model checks bid exceeds current highest, saves record (e.g., `{ UserId: "U602", AuctionId: 8, BidAmount: 550, Time: "2025-07-30 11:09" }`).
-5. Controller sends success (“Bid placed!”) or error (“Bid too low”) to View for display.
+1. **Inside End User (clicks a button in View)**: The user sees a “Place Bid” button on the auction page, clicks it, and submits their bid details like bid amount and user ID.
+2. **End User → Controller**: The click sends the bid details (e.g., User ID, bid amount) from the webpage to the AuctionController's PlaceBid method.
+3. **Controller**: The Controller receives the details, checks that all required information (e.g., User ID, bid amount) is present.
+4. **Controller → Model**: The Controller passes the bid details to the Model.
+5. **Model**: The Model checks that the bid details are complete (e.g., User ID is there, bid amount is valid).
+6. **Model → Database**: The Model sends a query to the Database.
+7. **Database**: The Database looks up the current bid status.
+8. **Database → Model**: The Database sends back whether the bid is eligible or not.
+9. **Model**: The Model confirms if the bid is eligible.
+10. **Model → Database**: The Model sends queries to the Database.
+11. **Database**: The Database saves the bid and updates the auction records.
+12. **Database → Model**: The Database sends back the result.
+13. **Model**: The Model notes if the bid was saved with a bid ID or if it failed (e.g., "Bid too low").
+14. **Model → Controller**: The Model sends this result back to the Controller.
+15. **Controller**: The Controller decides if it should show a "success" or "error" message.
+16. **Controller → View**: The Controller passes the result (success or error message) to the View.
+17. **View**: The View turns the result into a message, like "Bid placed!" or "Bid failed," and displays it.
+18. **View → End User**: The View shows the message on the page for the user to see.
 
 ---
 
@@ -199,16 +285,29 @@ Create a simple MVC application for a **Library Management System**:
 **Question**: Describe how data flows through the MVC layers when a user submits a comment via a URL navigation (e.g., /Posts/Comment/456), saving the comment in the database.
 
 **Roles**:
-- **Model**: Stores blog post and comment data, validates comment content (e.g., no profanity), saves comments to the database.
-- **Controller**: Handles comment submission requests from URL navigation, retrieves post data from Model, updates View with comment status.
-- **View**: Displays blog post and comment submission interface, shows comment confirmation.
+- **Model**: Stores comment details (e.g., user ID, text), validates comment content, and saves comments to the database.
+- **Controller**: Handles URL navigation requests (e.g., /Posts/Comment/456), retrieves comment data from the Model, and sends comment status to the View.
+- **View**: Displays the blog post interface with a comment form, shows comment submission status.
 
 **Data Flow**:
-1. Controller fetches post details from Model using URL (e.g., `PostId: 456`); View renders comment page.
-2. View captures comment data (e.g., `{ UserId: "U703", PostId: 456, Comment: "Great post!" }`) via AJAX.
-3. Controller validates comment, passes to Model.
-4. Model verifies comment content, saves record (e.g., `{ UserId: "U703", PostId: 456, Comment: "Great post!", Date: "2025-07-30" }`).
-5. Controller sends success (“Comment added!”) or error (“Inappropriate content”) to View for display.
+1. **Inside End User (clicks a button in View)**: The user navigates to /Posts/Comment/456, enters their comment (e.g., text, user ID), and submits it via the comment form.
+2. **End User → Controller**: The submission sends the comment details (e.g., User ID, comment text, post ID 456) to the CommentController's Submit method.
+3. **Controller**: The Controller receives the details, checks that all required information (e.g., User ID, comment text) is present.
+4. **Controller → Model**: The Controller passes the comment details to the Model.
+5. **Model**: The Model checks that the comment details are complete (e.g., User ID is there, text isn’t blank).
+6. **Model → Database**: The Model sends a query to the Database.
+7. **Database**: The Database looks up the post status.
+8. **Database → Model**: The Database sends back whether the post is valid for commenting.
+9. **Model**: The Model confirms the post is valid.
+10. **Model → Database**: The Model sends queries to the Database.
+11. **Database**: The Database saves the comment and updates the post records.
+12. **Database → Model**: The Database sends back the result.
+13. **Model**: The Model notes if the comment was saved with a comment ID or if it failed (e.g., "Post closed").
+14. **Model → Controller**: The Model sends this result back to the Controller.
+15. **Controller**: The Controller decides if it should show a "success" or "error" message.
+16. **Controller → View**: The Controller passes the result (success or error message) to the View.
+17. **View**: The View turns the result into a message, like "Comment posted!" or "Comment failed," and displays it.
+18. **View → End User**: The View shows the message on the page for the user to see.
 
 ---
 
@@ -216,16 +315,29 @@ Create a simple MVC application for a **Library Management System**:
 **Question**: Explain how data is transacted through the MVC layers when a smart home device sends a control command (e.g., turn on light) via an API call, with the command saved in the database.
 
 **Roles**:
-- **Model**: Stores device and command data (e.g., light status), validates command feasibility, saves command records to the database.
-- **Controller**: Processes device control API calls, retrieves device status from Model, updates View with command results.
-- **View**: Displays smart home dashboard with device controls and status.
+- **Model**: Stores device command details (e.g., device ID, command), validates command feasibility, and saves commands to the database.
+- **Controller**: Handles API call requests, retrieves command data from the Model, and sends command status to the View.
+- **View**: Displays the smart home control interface, shows command execution status.
 
 **Data Flow**:
-1. Controller receives API call with command (e.g., `{ DeviceId: "D505", Command: "TurnOn" }`).
-2. Controller passes command to Model for validation.
-3. Model checks command validity, saves record (e.g., `{ DeviceId: "D505", Command: "TurnOn", Timestamp: "2025-07-30 11:09" }`).
-4. Controller fetches updated device status from Model.
-5. Controller sends status to View, which updates dashboard (e.g., “Light D505: On”) or error (“Invalid command”).
+1. **Inside End User (clicks a button in View)**: The smart home device sends an API call to turn on a light, initiating the command with details like device ID.
+2. **End User → Controller**: The API call sends the command details (e.g., Device ID, command "turn on") to the DeviceController's Execute method.
+3. **Controller**: The Controller receives the details, checks that all required information (e.g., Device ID, command) is present.
+4. **Controller → Model**: The Controller passes the command details to the Model.
+5. **Model**: The Model checks that the command details are complete (e.g., Device ID is valid, command is recognized).
+6. **Model → Database**: The Model sends a query to the Database.
+7. **Database**: The Database looks up the device status.
+8. **Database → Model**: The Database sends back whether the device is operational.
+9. **Model**: The Model confirms the device is operational.
+10. **Model → Database**: The Model sends queries to the Database.
+11. **Database**: The Database saves the command and updates the device records.
+12. **Database → Model**: The Database sends back the result.
+13. **Model**: The Model notes if the command was saved with a command ID or if it failed (e.g., "Device offline").
+14. **Model → Controller**: The Model sends this result back to the Controller.
+15. **Controller**: The Controller decides if it should show a "success" or "error" message.
+16. **Controller → View**: The Controller passes the result (success or error message) to the View.
+17. **View**: The View turns the result into a message, like "Light turned on!" or "Command failed," and displays it.
+18. **View → End User**: The View shows the message on the interface for the device or user to see.
 
 ---
 
@@ -233,13 +345,28 @@ Create a simple MVC application for a **Library Management System**:
 **Question**: Describe how data flows through the MVC layers when a customer reserves a table at a restaurant via a web form, from submission to saving the reservation in the database.
 
 **Roles**:
-- **Model**: Manages restaurant and reservation data, checks table availability, saves records.
-- **Controller**: Processes reservation requests, coordinates with Model and View.
-- **View**: Displays reservation form and feedback.
+- **Model**: Stores reservation details (e.g., customer name, time), validates availability, and saves reservations to the database.
+- **Controller**: Handles web form submissions, retrieves reservation data from the Model, and sends reservation status to the View.
+- **View**: Displays the reservation form with time slots, shows reservation confirmation status.
 
 **Data Flow**:
-1. Controller fetches available time slots from Model; View shows form (e.g., “Date: [calendar], Time: [dropdown with ‘7 PM’]”).
-2. View sends form data (e.g., { CustomerId: "C789", Date: "2025-08-01", Time: "19:00", Guests: 4 }) to Controller.
-3. Controller validates input, passes to Model.
-4. Model checks table availability, saves reservation (e.g., { CustomerId: "C789", Date: "2025-08-01", Time: "19:00", Guests: 4 }).
-5. Controller sends success (“Table reserved!”) or error (“No tables available”) to View.
+1. **Inside End User (clicks a button in View)**: The customer sees a "Submit Reservation" button on the reservation form, clicks it, and submits their details like name and preferred time.
+2. **End User → Controller**: The click sends the reservation details (e.g., Customer name, time slot) from the webpage to the ReservationController's Submit method.
+3. **Controller**: The Controller receives the details, checks that all required information (e.g., Customer name, time slot) is present.
+4. **Controller → Model**: The Controller passes the reservation details to the Model.
+5. **Model**: The Model checks that the reservation details are complete (e.g., name is there, time slot is valid).
+6. **Model → Database**: The Model sends a query to the Database.
+7. **Database**: The Database looks up the reservation schedule.
+8. **Database → Model**: The Database sends back whether the time slot is available.
+9. **Model**: The Model confirms the time slot is free.
+10. **Model → Database**: The Model sends queries to the Database.
+11. **Database**: The Database saves the reservation and updates the schedule.
+12. **Database → Model**: The Database sends back the result.
+13. **Model**: The Model notes if the reservation was saved with a reservation ID or if it failed (e.g., "Time slot taken").
+14. **Model → Controller**: The Model sends this result back to the Controller.
+15. **Controller**: The Controller decides if it should show a "success" or "error" message.
+16. **Controller → View**: The Controller passes the result (success or error message) to the View.
+17. **View**: The View turns the result into a message, like "Reservation confirmed!" or "Reservation failed," and displays it.
+18. **View → End User**: The View shows the message on the page for the customer to see.
+
+---
