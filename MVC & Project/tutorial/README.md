@@ -128,18 +128,6 @@ The View is purely for presentation. It doesn’t access the Model directly or p
 
 ---
 
-## Practice Exercise
-
-Create a simple MVC application for a **Library Management System**:
-1. **Model**: Define a `Book` class with properties (e.g., Title, Author, ISBN) and logic to check if a book is available for borrowing.
-2. **Controller**: Create a `LibraryController` to handle actions like listing available books or borrowing a book. It should fetch data from the Model and pass it to the View.
-3. **View**: Design a simple UI (e.g., console output or web page) to display the book list and allow users to select a book to borrow.
-4. **Test Boundaries**:
-   - Ensure the Model only handles data and logic (e.g., no UI code).
-   - Ensure the Controller only coordinates (e.g., no discount calculations).
-   - Ensure the View only displays data and captures input (e.g., no direct Model access).
-
----
 
 # MVC Data Flow: Diverse Scenarios with Specific Roles
 
@@ -175,17 +163,19 @@ Create a simple MVC application for a **Library Management System**:
 
 11. **Database**: The Database saves the trip and updates the driver’s status to busy.
 
-12. **Model**: The Model receives the result from the Database, noting if the trip was saved with a booking ID or if it failed (e.g., "Driver not available").
+12. **Database → Model**: The Database sends back a confirmation message with a booking ID if the trip was saved, or an error message if it failed (e.g., "Trip save failed due to database error").
 
-13. **Model → Controller**: The Model sends this result back to the Controller.
+13. **Model**: The Model receives the result from the Database, noting if the trip was saved with a booking ID or if it failed (e.g., "Driver not available").
 
-14. **Controller**: The Controller looks at the result, decides if it should show a "success" or "error" message.
+14. **Model → Controller**: The Model sends this result back to the Controller.
 
-15. **Controller → View**: The Controller passes the result (success or error message) to the View.
+15. **Controller**: The Controller looks at the result, decides if it should show a "success" or "error" message.
 
-16. **View**: The View turns the result into a message, like "Ride booked!" or "Driver not available," and displays it.
+16. **Controller → View**: The Controller passes the result (success or error message) to the View.
 
-17. **View → End User**: The View shows the message on the page for the user to see.
+17. **View**: The View turns the result into a message, like "Ride booked!" or "Driver not available," and displays it.
+
+18. **View → End User**: The View shows the message on the page for the user to see.
 ---
 I apologize for the inconsistencies. You're right—some steps included actions like "sends a request" within a component instead of using a transition, and some transitions between Database and Model were missing. I'll correct this by ensuring all interactions are handled via transitions and include the proper flow. Here's the revised set of responses:
 

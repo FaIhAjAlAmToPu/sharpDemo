@@ -8,10 +8,11 @@ Welcome! This repository contains modular C# examples and exercises designed to 
 
 | Module                         | Description                                      |
 |-------------------------------|--------------------------------------------------|
-| `Interface & Abstraction`   | Usage of interfaces, abstract classes, and polymorphism. |
+| `Interface & Abstraction`     | Usage of interfaces, abstract classes, and polymorphism. |
 | `Exception Handling`          | Examples of try-catch, throw, and custom errors. |
 | `delegates & aggregation`     | Delegates, multicast delegates, and object relationships. |
 | `MVC & Project`               | Mini demonstrations of the MVC pattern. |
+| `LINQ`                        | Exercises and solutions for LINQ queries, covering arrays, objects, and database operations. |
 
 ---
 
@@ -24,13 +25,15 @@ Welcome! This repository contains modular C# examples and exercises designed to 
 ```bash
 git clone https://github.com/FaIhAjAlAmToPu/sharpDemo.git
 ```
+
 ---
 
 ## 🧪 Suggested Learning Order
 1. Interface & Abstraction
 2. Exception Handling
 3. delegates & aggregation
-4. MVC & Project
+4. LINQ
+5. MVC & Project
 
 ## 👨‍🏫 For Students
 - Practice exercises and challenges are included in each topic folder.
