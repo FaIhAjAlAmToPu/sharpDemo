@@ -171,6 +171,7 @@ namespace BookshopApp.Models
 
         [Required(ErrorMessage = "Customer ID is required")]
         [RegularExpression(@"^[A-Za-z0-9]{1,50}$", ErrorMessage = "Customer ID must be alphanumeric and up to 50 characters")]
+        [ForeignKey("Customer")]
         public string CustomerId { get; set; }
 
         [Required(ErrorMessage = "Book ID is required")]
