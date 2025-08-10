@@ -249,3 +249,63 @@ public class BooksController : Controller
 3. **POST Action**: The `Create` action with `[HttpPost]` processes the form. If the data is valid, it saves the book and redirects to `Index`. If not, it shows the form again.
 4. **Model**: The `Book` class holds the book’s data (title, author, price).
 
+
+
+
+## When to use @?
+Here are **3 examples** with clear use of `@` inside Razor views. But remember:
+* Inside pure C# code blocks — no `@` before variables or keywords.
+* When you start C# inside normal HTML — add `@`.
+---
+
+### Example 1: If condition with simple property print
+
+```razor
+@if (Model != null && Model.IsActive)   // No @ before Model here
+{
+    <p>User Name: @Model.Name</p>       // Use @ to print property inside HTML
+}
+else
+{
+    <p>No active user found.</p>
+}
+```
+
+---
+
+### Example 2: Loop through list with paragraphs `<p>`
+
+```razor
+@if (Model.Items.Count > 0)             // No @ inside if condition
+{
+    foreach (var item in Model.Items)   // No @ inside foreach
+    {
+        <p>@item.Name</p>                // Use @ to print property inside HTML
+    }
+}
+else
+{
+    <p>No items available.</p>
+}
+```
+
+---
+
+### Example 3: Loop inside unordered list `<ul>`
+
+```razor
+@if (Model.Items.Count > 0)             // No @ inside if condition
+{
+    <ul>
+        @foreach (var item in Model.Items)  // Use @ here because this starts C# inside HTML block
+        {
+            <li>@item.Name</li>              // Use @ to print property inside HTML
+        }
+    </ul>
+}
+else
+{
+    <p>No items available.</p>
+}
+```
+---
