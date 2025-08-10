@@ -1,5 +1,3 @@
-I understand these are practice questions, not a full project. I'll create a concise README to document the practice questions and their solutions for clarity and reference, focusing on the individual tasks without implying a cohesive project.
-
 # C# Practice Questions README
 
 This document outlines solutions to a set of C# practice questions covering various programming concepts, including data annotations, LINQ, Razor views, custom exceptions, delegates, aggregation, model relationships, and ASP.NET Core controller actions. Each question is designed to test specific skills and is presented with its solution and explanation.
