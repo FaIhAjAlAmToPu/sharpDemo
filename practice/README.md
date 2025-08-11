@@ -52,7 +52,47 @@ public class Student
 
 ## 2. LINQ Query (Music Streaming Playlist)
 **Task**: Implement `FilterAndSortSongs` to filter songs with `Duration > 180` seconds and sort by `Title` ascending.
+Task: Complete the FilterAndSortSongs method to use LINQ to:
+- Accept a List<Song> parameter.
+- Return the result as a List<Song>.
 
+```csharp
+using System.Collections.Generic;
+
+
+public class Song
+{
+    public string Title { get; set; }
+    public int Duration { get; set; }
+}
+
+
+public class SongManager
+{
+    public List<Song> FilterAndSortSongs(List<Song> songs)
+    {
+        // Complete the LINQ query
+    }
+}
+
+
+// For reference (not to be written by students)
+public class Program
+{
+    public static void Main()
+    {
+        List<Song> songs = new List<Song>
+        {
+            new Song { Title = "Song A", Duration = 200 },
+            new Song { Title = "Song B", Duration = 150 },
+            new Song { Title = "Song C", Duration = 190 }
+        };
+        SongManager manager = new SongManager();
+        List<Song> filteredSongs = manager.FilterAndSortSongs(songs);
+    }
+}
+
+```
 **Solution**:
 ```csharp
 using System.Collections.Generic;
@@ -84,7 +124,21 @@ public class SongManager
 ---
 
 ## 3. Displaying Data in a Razor View (Travel Agency)
-**Task**: Create a Razor view to display a `Tour` object's `Destination` and `Price`, or "Tour not found" if the model is null.
+
+**Scenario:** A travel agency website displays tour details on a web page. The controller passes a Tour object to the view using return View(tour);.
+**Task:** Complete the Razor view to:
+- Specify the model type.
+- Display Destination and Price with labels.
+- Show "Tour not found" if the model is null.
+
+```csharp
+// For reference (not to be written by students)
+public class Tour
+{
+    public string Destination { get; set; }
+    public decimal Price { get; set; }
+}
+```
 
 **Solution**:
 ```razor
@@ -166,8 +220,19 @@ public void TriggerNotifications(string message)
 ---
 
 ## 6. Aggregation with List (Bookstore Inventory)
-**Task**: Create `Book` and `BookStore` classes, with a constructor to initialize a `List<Book>` and a method to filter books with `Price < 50`. Include a sample `Main` method.
+A bookstore application manages book inventories. Each bookstore contains a list of books in its stock, representing an aggregation relationship. The book data is provided when the bookstore is initialized, as the books are inherent to the library.
+**Task:**
 
+a. Define the Book class with properties Id, Title, and Price (must be positive). Use data annotations to ensure Title is required and Price is positive.
+
+b. Complete the BookStore class to:
+- Define a List<Book> property to represent the aggregation.
+- Implement a constructor that accepts a List<Book> parameter to initialize the Books property.
+- Implement the GetAvailableBooks method to use LINQ to filter books with Price < 50 from the aggregated list and return the filtered list.
+
+c. Write a Main method to:
+- Create a List<Book> with 3 sample books (with varying prices).
+- Create a BookStore instance, passing the book list to the constructor.
 **Solution**:
 ```csharp
 using System.ComponentModel.DataAnnotations;
@@ -272,9 +337,16 @@ public class Doctor
 ---
 
 ## 8. Displaying Data with ViewBag and Foreach Loop (Restaurant Menu)
-**Task**: Create a controller to populate `ViewBag.Categories` and pass a `List<MenuItem>`. Create a Razor view to display categories and menu items.
+**Scenario:** A restaurant website displays its menu items on a web page. The controller uses ViewBag to pass a list of categories to the view, which displays menu items using a foreach loop.
 
-**Solution**:
+**Task:**
+Complete the controller action to populate ViewBag.Categories with a list of 3 sample categories (e.g., "Appetizers", "Main Course", "Desserts") and pass a List<MenuItem> to the view.
+
+Complete the Razor view to:
+- Specify the model type as List<MenuItem>.
+- Display ViewBag.Categories in an \<h2\> tag.
+- Use a foreach loop to display each MenuItem's Name and Price.
+
 ```csharp
 // Controller (RestaurantController.cs)
 using Microsoft.AspNetCore.Mvc;
@@ -295,6 +367,7 @@ public class RestaurantController : Controller
     }
 }
 ```
+**Solution**:
 
 ```razor
 // Razor view (Restaurant/Menu.cshtml)
@@ -315,7 +388,16 @@ public class RestaurantController : Controller
 ---
 
 ## 9. Configuring Controller Actions with HTTP Methods and Routes (Pet Adoption)
-**Task**: Create `PetController` with actions for GET, POST, PUT, and DELETE endpoints.
+**Scenario:** A pet adoption system manages pet profiles and adoption requests. The system exposes endpoints to retrieve, create, update, and delete pet data, using various HTTP methods and URL patterns. Requests may include path parameters, query parameters, and form data.
+
+**Task:**
+Complete the PetController class with action methods for the following endpoints, handling different parameter bindings:
+- GET /pet/list?species={species}: Retrieves pets by species.
+- POST /pet/add: Creates a new pet profile (accepts form data with fields 'name' (string), 'species' (string), 'age' (int)).
+- PUT /pet/update/{id}: Updates an existing pet by ID (also accepts updated form data with fields 'name' (string), 'species' (string), 'age' (int)).
+- DELETE /pet/remove/{id}: Deletes a pet by ID.
+- GET /pet/details?id={id}: Retrieves pet details via GET; also supports POST /pet/details with form data 'formId'.
+Use HttpGet, HttpPost, HttpPut, and HttpDelete attributes to map the routes. Return a simple string response for each action incorporating the parameters (e.g., Content($"Pets retrieved for species: {species}"), Content($"Pet added: {name}, {species}, {age}")).
 
 **Solution**:
 ```csharp
@@ -330,27 +412,32 @@ public class PetController : Controller
     }
 
     [HttpPost("pet/add")]
-    public IActionResult AddPet()
+    public IActionResult AddPet([FromForm] string name, [FromForm] string species, [FromForm] int age)
     {
-        return Content("Pet added");
+        return Content($"Pet added: {name}, {species}, {age}");
     }
 
     [HttpPut("pet/update/{id}")]
-    public IActionResult UpdatePet(int id)
+    public IActionResult UpdatePet([FromRoute] int id, [FromForm] string name, [FromForm] string species, [FromForm] int age)
     {
-        return Content($"Pet updated: {id}");
+        return Content($"Pet updated: ID {id}, {name}, {species}, {age}");
     }
 
     [HttpDelete("pet/remove/{id}")]
-    public IActionResult RemovePet(int id)
+    public IActionResult RemovePet([FromRoute] int id)
     {
         return Content($"Pet removed: {id}");
     }
 
     [HttpGet("pet/details")]
     [HttpPost("pet/details")]
-    public IActionResult GetPetDetails()
+    public IActionResult GetPetDetails([FromQuery] int? id = null, [FromForm] int? formId = null)
     {
+        int? petId = id ?? formId;
+        if (petId.HasValue)
+        {
+            return Content($"Pet details retrieved for ID: {petId.Value}");
+        }
         return Content("Pet details retrieved");
     }
 }
@@ -358,7 +445,9 @@ public class PetController : Controller
 
 **Explanation**:
 - Actions use `[HttpGet]`, `[HttpPost]`, `[HttpPut]`, and `[HttpDelete]` to map routes.
-- Supports query parameters (`species`), route parameters (`id`), and multiple HTTP methods (`GET/POST` for details).
+- Parameters are bound using `[FromQuery]` for query strings, `[FromForm]` for form data, and `[FromRoute]` for path parameters.
+- For `GetPetDetails`, it handles both GET (query 'id') and POST (form 'id'), combining them for a unified response.
+- Supports path parameters (e.g., {id}), query parameters (e.g., ?species={species}), and form bodies (e.g., for POST/PUT with name, species, age).
 
 ---
 
