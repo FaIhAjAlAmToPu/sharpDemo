@@ -1,20 +1,6 @@
 # C# Practice Questions README
 
-This document outlines solutions to a set of C# practice questions covering various programming concepts, including data annotations, LINQ, Razor views, custom exceptions, delegates, aggregation, model relationships, and ASP.NET Core controller actions. Each question is designed to test specific skills and is presented with its solution and explanation.
-
-## Table of Contents
-1. [Model with Data Annotations (Student Profile)](#1-model-with-data-annotations-student-profile)
-2. [LINQ Query (Music Streaming Playlist)](#2-linq-query-music-streaming-playlist)
-3. [Displaying Data in a Razor View (Travel Agency)](#3-displaying-data-in-a-razor-view-travel-agency)
-4. [Custom Exception (Fitness Tracking App)](#4-custom-exception-fitness-tracking-app)
-5. [Multicasting Delegates (E-commerce Notifications)](#5-multicasting-delegates-e-commerce-notifications)
-6. [Aggregation with List (Bookstore Inventory)](#6-aggregation-with-list-bookstore-inventory)
-7. [Relation Handling in Models (Hospital Management)](#7-relation-handling-in-models-hospital-management)
-8. [Displaying Data with ViewBag and Foreach Loop (Restaurant Menu)](#8-displaying-data-with-viewbag-and-foreach-loop-restaurant-menu)
-9. [Configuring Controller Actions with HTTP Methods and Routes (Pet Adoption)](#9-configuring-controller-actions-with-http-methods-and-routes-pet-adoption)
-10. [Explain how data is transacted through the MVC layers (Ride Sharing)](#10-when-a-user-books-a-ride-by-clicking-a-book-now-button-from-the-action-to-saving-the-trip-in-the-database)
-
-
+This document outlines solutions to a set of C# practice questions covering various programming concepts, including data annotations, LINQ, Razor views, custom exceptions, delegates, aggregation, model relationships, and ASP.NET Core controller actions.
 
 ---
 
