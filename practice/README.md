@@ -1,4 +1,4 @@
-# C# Practice Questions README
+# C# Practice Questions
 
 This document outlines solutions to a set of C# practice questions covering various programming concepts, including data annotations, LINQ, Razor views, custom exceptions, delegates, aggregation, model relationships, and ASP.NET Core controller actions.
 
