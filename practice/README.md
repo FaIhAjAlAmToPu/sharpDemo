@@ -879,10 +879,86 @@ public class BooksController : Controller
 
 ---
 
-# Class Practices
-## 16. When an admin generates a sales report in a business dashboard, explain how the MVC data flow works from selecting a date range and clicking “Generate Report” to retrieving data from the database and displaying the report in charts and tables.
+## 16. LINQ with Join
+**Scenario:** You are developing a Customer–Order Management System. The system keeps track of customers and their product orders.
 
-## 17. Develop action methods for a Student Management System using ASP.NET Core MVC:
+Customers: CustomerID, Name, City
+
+Orders: OrderID, CustomerID, ProductName, Amount
+
+**Task:** Write a LINQ query to perform an inner join between Customers and Orders so that you can display each customer’s name, the product ordered, and the amount.
+
+**Solution**:
+```csharp
+var customerOrders = customers
+    .Join(orders,
+        c => c.CustomerID,
+        o => o.CustomerID,
+        (c, o) => new
+        {
+            CustomerName = c.Name,
+            ProductName = o.ProductName,
+            Amount = o.Amount
+        });
+```
+---
+
+## 17. LINQ with GroupBy
+**Scenario:** You are developing a Movie Streaming Analytics System.
+
+Movies: MovieID, Title, Genre, Rating
+
+**Task:** Write a LINQ query to group movies by Genre and display:
+
+- Genre
+- Number of movies in that genre
+
+**Solution**:
+```csharp
+var moviesByGenre = movies
+    .GroupBy(m => m.Genre)
+    .Select(g => new { Genre = g.Key, MovieCount = g.Count() });
+
+foreach (var g in moviesByGenre)
+{
+    Console.WriteLine($"{g.Genre} → {g.MovieCount} movies");
+}
+
+```
+---
+
+## 18. LINQ with Join + GroupBy
+**Scenario:** You are developing a University Management System.
+The system maintains two collections:
+
+Students (StudentID, Name, DepartmentID)
+
+Departments (DepartmentID, DepartmentName)
+
+**Task:** Write a query to find the top 5 departments with the most students, and display each department’s name along with the student count.
+
+**Solution**:
+```csharp
+var topDepartments = students
+    .GroupBy(s => s.DepartmentID)
+    .Join(departments,
+          g => g.Key,
+          d => d.DepartmentID,
+          (g, d) => new { DepartmentName = d.DepartmentName, StudentCount = g.Count() })
+    .OrderByDescending(x => x.StudentCount)
+    .Take(5);
+
+foreach (var dept in topDepartments)
+{
+    Console.WriteLine($"{dept.DepartmentName} → {dept.StudentCount} students");
+}
+```
+---
+
+# Class Practices
+## 19. When an admin generates a sales report in a business dashboard, explain how the MVC data flow works from selecting a date range and clicking “Generate Report” to retrieving data from the database and displaying the report in charts and tables.
+
+## 20. Develop action methods for a Student Management System using ASP.NET Core MVC:
 (a) Design action methods only for the following endpoints. Use correct HTTP methods, route templates, and parameter binding attributes:  
 - `GET /students/2025?grade=A` → Retrieves all students admitted in 2025, optionally filtered by grade (year from route, grade from query).  
 - `POST /students/add?scholarship=true` → Adds a new student with fields submitted via form (FullName, RollNumber, Email). Query parameter scholarship indicates whether the student has a scholarship.  
@@ -899,10 +975,10 @@ public IActionResult AllStudents(){
 }
 
 ```
-Task: Display these students in a table with columns: Id, FullName, RollNumber, and Email.
+**Task:** Display these students in a table with columns: Id, FullName, RollNumber, and Email.
 
-## 18. Query employee data using LINQ:
+## 21. Query employee data using LINQ:
 
 Employee: has EmployeeId, Name, Department, Salary.
 - Given: a list named employees.
-- Task: Write a LINQ query to select Name and Salary of IT employees, ordered by Salary descending.
+- **Task:** Write a LINQ query to select Name and Salary of IT employees, ordered by Salary descending.
