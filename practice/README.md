@@ -816,16 +816,15 @@ public class PetController : Controller
 **Solution**:
 **Endpoint Routing**
 ```csharp
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        pattern: "books/all",
-        defaults: new { controller = "Books", action = "ListAll" });
+app.MapControllerRoute(
+    name: "booksAll",
+    pattern: "books/all",
+    defaults: new { controller = "Books", action = "ListAll" });
 
-    endpoints.MapControllerRoute(
-        pattern: "books/{bookId}",
-        defaults: new { controller = "Books", action = "Details" });
-});
+app.MapControllerRoute(
+    name: "booksDetails",
+    pattern: "books/{bookId}",
+    defaults: new { controller = "Books", action = "Details" });
 ```
 **Attribute Routing**
 ```csharp
