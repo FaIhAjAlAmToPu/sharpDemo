@@ -941,7 +941,7 @@ foreach (var dept in topDepartments)
 ---
 
 # Class Practices
-## 19. When an admin generates a sales report in a business dashboard, explain how the MVC data flow works from selecting a date range and clicking “Generate Report” to retrieving data from the database and displaying the report in charts and tables.
+## 19. Explain how the MVC data flow works when an admin generates a sales report in a business dashboard, explain how the MVC data flow works from selecting a date range and clicking “Generate Report” to retrieving data from the database and displaying the report in charts and tables.
 
 ## 20. Develop action methods for a Student Management System using ASP.NET Core MVC:
 (a) Design action methods only for the following endpoints. Use correct HTTP methods, route templates, and parameter binding attributes:  
@@ -967,3 +967,157 @@ public IActionResult AllStudents(){
 Employee: has EmployeeId, Name, Department, Salary.
 - Given: a list named employees.
 - **Task:** Write a LINQ query to select Name and Salary of IT employees, ordered by Salary descending.
+
+## 22. Explain how the MVC data flow works when a user searches for a movie in a movie app, explain the MVC data flow from clicking the “Search” button to retrieving matching movies from the database and displaying the results.
+
+## 23. A programmer is developing a fitness app that tracks workout sessions.
+Each workout session consists of multiple exercises, and each exercise has the following properties: Name, Number of repetitions (Reps), and Calories burned.  
+The app should include:  
+- A class representing an Exercise with properties: Name, Reps, and CaloriesBurned.  
+- A WorkoutSession class that stores the user’s name and a list of exercises, provided through the constructor.  
+
+The programmer wants to calculate the total calories burned in a workout session and also help his lazy friend who wants to identify up to n exercises from the workout session that each burn more than 30 calories.  
+
+**Task:** Design and implement the necessary classes with constructors where appropriate. Implement two methods inside the suitable class:  
+- A method to compute the total calories burned in the workout session.  
+- A method that returns the names of up to n exercises burning more than 30 calories each.  
+
+*Remember: As your friend is lazy, you should return the names of the exercises in a way that helps him avoid unnecessary effort.*
+
+## 24. You have this model and controller for a weather app:
+```csharp
+public class WeatherReport{
+    public string City { get; set; }
+    public double TemperatureCelsius { get; set; }
+    public string Condition { get; set; }
+}
+public class WeatherController : Controller{
+    public IActionResult Details(WeatherReport report){
+        return View(report);
+    }
+}
+```
+
+**Task:** Write and implement a Razor view that displays City, TemperatureCelsius, Condition, and a temperature-based message (either "So cold!" if below 10°C or "Great weather." otherwise), each in a separate paragraph.
+
+## 25. Create a Custom exception
+Given the following function that throws an AgeRestrictionException when the age is below 18:
+```csharp
+public void ValidateAge(int age){
+    if (age < 18)
+        throw new AgeRestrictionException("User must be at least 18 years old.");
+}
+```
+**Task:** Create the AgeRestrictionException custom exception class.
+
+## 26. You are developing an online electronics store application. Each product has the following properties: Name (string), Category (string), Price (decimal), and Rating (double).  
+Design and implement a C# class named Product with these properties.  
+Apply appropriate data annotations to enforce the following validations:  
+- Name is required and cannot exceed 100 characters.  
+- Category is required.  
+- Price must be between 0.01 and 10,000.  
+- Rating must be between 0 and 5.  
+
+Implement the following method to return a curated list of products as per the marketing team's strategy:  
+```csharp
+public List<Product> GetFeaturedProducts(List<Product> products){  
+    // TODO: Implement this method  
+}  
+```
+The marketing team wants to promote “electronics” priced above $100. The top 3 highest-rated products in this price range dominate sales. To give other products a fair chance, they want to feature the next 5 best-rated electronic products in that price range on the homepage.  
+
+**Task:** Apply LINQ queries in the GetFeaturedProducts method to produce the required featured products list according to the marketing strategy.  
+*Note: You should only write the body of the GetFeaturedProducts method, filling in the LINQ query and returning the result. The method signature and class definitions are provided.*  
+
+---
+
+## 27. Continuing from the previous product selection scenario, the controller sends a list of featured products to the view.  
+Given the following controller action:  
+```csharp
+public IActionResult FeaturedProducts(List<Product> products){  
+    var featuredProducts = GetFeaturedProducts(products);  
+    return View(featuredProducts);  
+}  
+```
+**Task:** Write and implement the Razor view code to display the product details (Name, Category, Price, and Rating) for each product in the list.  
+
+---
+
+## 28. You are developing a Conference Management System API. Define action methods in the ConferenceController for these endpoints. Use appropriate HTTP methods, route templates, and parameter binding attributes ([FromRoute], [FromQuery], [FromForm]).  
+
+Example request URLs and details:  
+- GET /conference/schedule/2025/5  
+  Retrieves the schedule for the conference held in May 2025. The year and month values are part of the URL path.  
+
+- GET /conference/attendees/AI?registered=true  
+  Retrieves attendees for the “AI” track. An additional value registered=true is included in the URL.  
+
+- POST /conference/register?sessionId=101  
+  Registers a participant for a session. The URL contains sessionId=101. The form data includes:  
+  - participantName  
+  - email  
+
+- DELETE /conference/cancel/789  
+  Cancels a registration identified by 789, which is part of the URL.  
+
+- PUT /conference/update/789?notify=true  
+  Updates registration information identified by 789. The URL contains notify=true. The form data includes:  
+  - participantName  
+  - email  
+
+**Task:** Define only the method signatures, including the correct [Http...] attributes and parameter bindings using [FromRoute], [FromQuery], and [FromForm].  
+*You do not need to implement the method bodies.*  
+
+## 29. You are building a Student Enrollment system for a university. The system collects the following information from each student:  
+- FullName: This field is mandatory. The Name must not exceed 50 characters.  
+- EmailAddress: This is required and must be a valid email format to contact the student.  
+- Age: Students must be at least 17 years old and no older than 100.  
+- StudentID: Every student must have a unique ID that must not exceed 15 characters.  
+- Major: The student's major field of study is required.  
+- PhoneNumber: This is optional. If provided, it should not exceed 11 characters.  
+- GPA: This number reflects academic performance and must be between 0 and 4.  
+
+**Task:** Design and implement a C# class named Student with properties corresponding to the above details. Based on the requirements, apply suitable validation attributes to each property to enforce the described constraints.  
+
+## 30. An online store wants to display product details on a web page. The controller action ProductDetails passes a Product model containing the product’s name and price to the view. It also sets ViewBag.IsSaleActive (true/false) based on whether the product is currently on sale (true if it is on sale).  
+
+Controller:  
+```csharp
+public IActionResult ProductDetails(bool isSaleActive, Product product){  
+    ViewBag.IsSaleActive = isSaleActive;  
+    return View(product);  
+}  
+```
+**Task:**  
+Write and implement a Razor view to:  
+- Display either “On Sale Now!” if it is on sale or “Regular Price” otherwise.  
+- Show the product’s name and price from the model.  
+
+---
+
+## 31. Difference between the largest score and the second smallest unique score
+Develop a method named GetScoreDifference that takes an integer array numbers representing contest scores.  
+The method should:  
+- Return -1, if the array contains fewer than two unique scores.  
+- Otherwise return the difference between the largest score and the second smallest unique score.  
+
+**Task:** You may use more than one LINQ query to solve this problem.  
+
+## 32. You are given three functions: A(), B(), and C(). Initially, a delegate D is assigned to function A():  
+```csharp
+delegate void MyDelegate();  
+void A() => Console.WriteLine("A");  
+void B() => Console.WriteLine("B");  
+void C() => Console.WriteLine("C");  
+MyDelegate D = A;  
+```
+**Task:**  
+Write the code after this so that the delegate D produces the following output when invoked:  
+```output
+B  
+B  
+C  
+```
+You are given the restriction that you cannot overwrite the delegate D with a new assignment like D = B;. Modify and demonstrate the delegate D so that it produces the given sequence of outputs without reassigning it directly, and invoke the delegate to display the results.  
+
+---
