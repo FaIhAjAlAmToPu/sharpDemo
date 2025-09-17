@@ -841,7 +841,26 @@ public class BooksController : Controller
     }
 }
 ```
-## 15. when a user books a ride by clicking a “Book Now” button, from the action to saving the trip in the database
+
+## 15. Endpoint Routing using direct function mapping
+**Scenario:** You are building an MVC-based library management system. The system has the following endpoints:
+
+1. /books/all → Returns a list of all books in the library. (Function: ListAllBooks())
+2. /books/{bookId} → Returns details of a specific book by its unique ID. (Function: GetBookDetails(int bookId))
+
+**Task:** Configure routing for both endpoints using direct function mapping in Program.cs (no controllers or actions).
+
+**Solution**:
+```csharp
+// Endpoint: /books/all → calls ListAllBooks()
+app.MapGet("/books/all", ListAllBooks);
+
+// Endpoint: /books/{bookId} → calls GetBookDetails(int bookId)
+app.MapGet("/books/{bookId:int}", GetBookDetails);
+```
+
+
+## 16. when a user books a ride by clicking a “Book Now” button, from the action to saving the trip in the database
 1. **Inside End User (clicks a button in View)**: The user sees a "Book Now" button on the ride booking page, clicks it, and submits their ride details like pickup location and driver preference.
 2. **End User → Controller**: The click sends the ride details (e.g., User ID, pickup location, driver ID) from the webpage to the RideController's Book method.
 3. **Controller**: The Controller receives the details, checks that all required information (e.g., User ID, pickup location, driver ID) is present.
@@ -864,7 +883,7 @@ public class BooksController : Controller
 
 ---
 
-## 16. LINQ with Join
+## 17. LINQ with Join
 **Scenario:** You are developing a Customer–Order Management System. The system keeps track of customers and their product orders.
 
 Customers: CustomerID, Name, City
@@ -888,7 +907,7 @@ var customerOrders = customers
 ```
 ---
 
-## 17. LINQ with GroupBy
+## 18. LINQ with GroupBy
 **Scenario:** You are developing a Movie Streaming Analytics System.
 
 Movies: MovieID, Title, Genre, Rating
@@ -912,7 +931,7 @@ foreach (var g in moviesByGenre)
 ```
 ---
 
-## 18. LINQ with Join + GroupBy
+## 19. LINQ with Join + GroupBy
 **Scenario:** You are developing a University Management System.
 The system maintains two collections:
 
@@ -941,9 +960,9 @@ foreach (var dept in topDepartments)
 ---
 
 # Class Practices
-## 19. Explain how the MVC data flow works when an admin generates a sales report in a business dashboard, explain how the MVC data flow works from selecting a date range and clicking “Generate Report” to retrieving data from the database and displaying the report in charts and tables.
+## 20. Explain how the MVC data flow works when an admin generates a sales report in a business dashboard, explain how the MVC data flow works from selecting a date range and clicking “Generate Report” to retrieving data from the database and displaying the report in charts and tables.
 
-## 20. Develop action methods for a Student Management System using ASP.NET Core MVC:
+## 21. Develop action methods for a Student Management System using ASP.NET Core MVC:
 (a) Design action methods only for the following endpoints. Use correct HTTP methods, route templates, and parameter binding attributes:  
 - `GET /students/2025?grade=A` → Retrieves all students admitted in 2025, optionally filtered by grade (year from route, grade from query).  
 - `POST /students/add?scholarship=true` → Adds a new student with fields submitted via form (FullName, RollNumber, Email). Query parameter scholarship indicates whether the student has a scholarship.  
@@ -962,15 +981,15 @@ public IActionResult AllStudents(){
 ```
 **Task:** Display these students in a table with columns: Id, FullName, RollNumber, and Email.
 
-## 21. Query employee data using LINQ:
+## 22. Query employee data using LINQ:
 
 Employee: has EmployeeId, Name, Department, Salary.
 - Given: a list named employees.
 - **Task:** Write a LINQ query to select Name and Salary of IT employees, ordered by Salary descending.
 
-## 22. Explain how the MVC data flow works when a user searches for a movie in a movie app, explain the MVC data flow from clicking the “Search” button to retrieving matching movies from the database and displaying the results.
+## 23. Explain how the MVC data flow works when a user searches for a movie in a movie app, explain the MVC data flow from clicking the “Search” button to retrieving matching movies from the database and displaying the results.
 
-## 23. A programmer is developing a fitness app that tracks workout sessions.
+## 24. A programmer is developing a fitness app that tracks workout sessions.
 Each workout session consists of multiple exercises, and each exercise has the following properties: Name, Number of repetitions (Reps), and Calories burned.  
 The app should include:  
 - A class representing an Exercise with properties: Name, Reps, and CaloriesBurned.  
@@ -984,7 +1003,7 @@ The programmer wants to calculate the total calories burned in a workout session
 
 *Remember: As your friend is lazy, you should return the names of the exercises in a way that helps him avoid unnecessary effort.*
 
-## 24. You have this model and controller for a weather app:
+## 25. You have this model and controller for a weather app:
 ```csharp
 public class WeatherReport{
     public string City { get; set; }
@@ -1000,7 +1019,7 @@ public class WeatherController : Controller{
 
 **Task:** Write and implement a Razor view that displays City, TemperatureCelsius, Condition, and a temperature-based message (either "So cold!" if below 10°C or "Great weather." otherwise), each in a separate paragraph.
 
-## 25. Create a Custom exception
+## 26. Create a Custom exception
 Given the following function that throws an AgeRestrictionException when the age is below 18:
 ```csharp
 public void ValidateAge(int age){
@@ -1010,7 +1029,7 @@ public void ValidateAge(int age){
 ```
 **Task:** Create the AgeRestrictionException custom exception class.
 
-## 26. You are developing an online electronics store application. Each product has the following properties: Name (string), Category (string), Price (decimal), and Rating (double).  
+## 27. You are developing an online electronics store application. Each product has the following properties: Name (string), Category (string), Price (decimal), and Rating (double).  
 Design and implement a C# class named Product with these properties.  
 Apply appropriate data annotations to enforce the following validations:  
 - Name is required and cannot exceed 100 characters.  
@@ -1031,7 +1050,7 @@ The marketing team wants to promote “electronics” priced above $100. The top
 
 ---
 
-## 27. Continuing from the previous product selection scenario, the controller sends a list of featured products to the view.  
+## 28. Continuing from the previous product selection scenario, the controller sends a list of featured products to the view.  
 Given the following controller action:  
 ```csharp
 public IActionResult FeaturedProducts(List<Product> products){  
@@ -1043,7 +1062,7 @@ public IActionResult FeaturedProducts(List<Product> products){
 
 ---
 
-## 28. You are developing a Conference Management System API. Define action methods in the ConferenceController for these endpoints. Use appropriate HTTP methods, route templates, and parameter binding attributes ([FromRoute], [FromQuery], [FromForm]).  
+## 29. You are developing a Conference Management System API. Define action methods in the ConferenceController for these endpoints. Use appropriate HTTP methods, route templates, and parameter binding attributes ([FromRoute], [FromQuery], [FromForm]).  
 
 Example request URLs and details:  
 - GET /conference/schedule/2025/5  
@@ -1068,7 +1087,7 @@ Example request URLs and details:
 **Task:** Define only the method signatures, including the correct [Http...] attributes and parameter bindings using [FromRoute], [FromQuery], and [FromForm].  
 *You do not need to implement the method bodies.*  
 
-## 29. You are building a Student Enrollment system for a university. The system collects the following information from each student:  
+## 30. You are building a Student Enrollment system for a university. The system collects the following information from each student:  
 - FullName: This field is mandatory. The Name must not exceed 50 characters.  
 - EmailAddress: This is required and must be a valid email format to contact the student.  
 - Age: Students must be at least 17 years old and no older than 100.  
@@ -1079,7 +1098,7 @@ Example request URLs and details:
 
 **Task:** Design and implement a C# class named Student with properties corresponding to the above details. Based on the requirements, apply suitable validation attributes to each property to enforce the described constraints.  
 
-## 30. An online store wants to display product details on a web page. The controller action ProductDetails passes a Product model containing the product’s name and price to the view. It also sets ViewBag.IsSaleActive (true/false) based on whether the product is currently on sale (true if it is on sale).  
+## 31. An online store wants to display product details on a web page. The controller action ProductDetails passes a Product model containing the product’s name and price to the view. It also sets ViewBag.IsSaleActive (true/false) based on whether the product is currently on sale (true if it is on sale).  
 
 Controller:  
 ```csharp
@@ -1095,7 +1114,7 @@ Write and implement a Razor view to:
 
 ---
 
-## 31. Difference between the largest score and the second smallest unique score
+## 32. Difference between the largest score and the second smallest unique score
 Develop a method named GetScoreDifference that takes an integer array numbers representing contest scores.  
 The method should:  
 - Return -1, if the array contains fewer than two unique scores.  
@@ -1103,7 +1122,7 @@ The method should:
 
 **Task:** You may use more than one LINQ query to solve this problem.  
 
-## 32. You are given three functions: A(), B(), and C(). Initially, a delegate D is assigned to function A():  
+## 33. You are given three functions: A(), B(), and C(). Initially, a delegate D is assigned to function A():  
 ```csharp
 delegate void MyDelegate();  
 void A() => Console.WriteLine("A");  
